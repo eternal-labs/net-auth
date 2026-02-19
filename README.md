@@ -96,7 +96,7 @@ NetAuth includes a powerful CLI for managing agents and payments directly from t
 After installing dependencies, the CLI is available via:
 
 ```bash
-npm run cli
+npm run netauth
 ```
 
 Or after building:
