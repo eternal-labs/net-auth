@@ -52,8 +52,33 @@ NetAuth provides a secure, private payment infrastructure for autonomous agents 
 
 ### Installation
 
+#### Global Installation (Recommended)
+
+Install NetAuth globally to use the CLI from anywhere:
+
+```bash
+npm install -g netauth
+```
+
+After installation, you can use the `netauth` command directly:
+
+```bash
+netauth --help
+netauth agent register my-agent
+```
+
+#### Local Installation
+
+For development or local use:
+
 ```bash
 npm install
+```
+
+Then use via npm script:
+
+```bash
+npm run netauth
 ```
 
 ### Configuration
@@ -93,10 +118,16 @@ NetAuth includes a powerful CLI for managing agents and payments directly from t
 
 ### Installation
 
-After installing dependencies, the CLI is available via:
+If installed globally:
 
 ```bash
-npm run netauth
+netauth --help
+```
+
+If installed locally:
+
+```bash
+npm run netauth -- --help
 ```
 
 Or after building:
