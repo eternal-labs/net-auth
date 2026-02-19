@@ -87,6 +87,85 @@ npm run build
 npm start
 ```
 
+## CLI Usage
+
+NetAuth includes a powerful CLI for managing agents and payments directly from the command line.
+
+### Installation
+
+After installing dependencies, the CLI is available via:
+
+```bash
+npm run cli
+```
+
+Or after building:
+
+```bash
+npm run build
+node dist/cli/index.js
+```
+
+### CLI Commands
+
+#### Agent Management
+
+```bash
+# Register a new agent
+netauth agent register <agentId> [--key <publicKey>]
+
+# Get agent information
+netauth agent info <agentId>
+
+# Get agent balance
+netauth agent balance <agentId> [--sol]
+
+# List all agents
+netauth agent list
+```
+
+#### Payments
+
+```bash
+# Send a payment (in lamports)
+netauth payment send <fromAgentId> <toAgentId> <amount> [--memo <memo>]
+
+# Send a payment (in SOL)
+netauth payment send <fromAgentId> <toAgentId> <amount> --sol [--memo <memo>]
+
+# Get payment status
+netauth payment status <paymentId> [--agent <agentId>]
+
+# View payment history
+netauth payment history <agentId> [--limit <number>]
+```
+
+#### Wallet Management
+
+```bash
+# Get wallet information
+netauth wallet info <agentId>
+
+# Convert between SOL and lamports
+netauth wallet convert <amount> [--to sol|lamports]
+```
+
+### Examples
+
+```bash
+# Register an agent
+netauth agent register agent-123
+
+# Check balance
+netauth agent balance agent-123 --sol
+
+# Send 0.1 SOL to another agent
+netauth payment send agent-123 agent-456 0.1 --sol --memo "Payment for services"
+
+# View payment history
+netauth payment history agent-123 --limit 20
+```
+
 ## API Documentation
 
 ### Register Agent
