@@ -116,25 +116,28 @@ npm start
 
 NetAuth includes a powerful CLI for managing agents and payments directly from the command line.
 
-### Installation
+### Quick Start
 
-If installed globally:
+After installing globally with `npm install -g @eternallabs/netauth`, you can use the CLI:
 
 ```bash
+# Show help
 netauth --help
-```
 
-If installed locally:
+# Register a new agent
+netauth agent register my-agent
 
-```bash
-npm run netauth -- --help
-```
+# Check agent balance
+netauth agent balance my-agent --sol
 
-Or after building:
+# Send a payment (0.1 SOL)
+netauth payment send my-agent other-agent 0.1 --sol --memo "Payment for services"
 
-```bash
-npm run build
-node dist/cli/index.js
+# View payment history
+netauth payment history my-agent
+
+# Get payment status
+netauth payment status <payment-id>
 ```
 
 ### CLI Commands
