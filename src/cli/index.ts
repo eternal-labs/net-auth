@@ -10,7 +10,7 @@ const program = new Command();
 program
   .name('netauth')
   .description('NetAuth CLI - Autonomous privacy layer for agent payments using x402 and Solana')
-  .version('1.0.0');
+  .version('1.0.1');
 
 // Add command groups
 program.addCommand(agentCommands);

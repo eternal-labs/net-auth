@@ -1,6 +1,6 @@
 {
   "name": "@eternallabs/netauth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Autonomous privacy layer for agent payments using x402 and Solana",
   "main": "dist/index.js",
   "scripts": {
