@@ -30,7 +30,7 @@ export class PrivacyService {
       }
 
       // Create privacy token through x402 protocol
-      const { privacyToken, encryptedData } = await x402Service.createPrivatePayment(
+      const { privacyToken } = await x402Service.createPrivatePayment(
         fromWallet.publicKey,
         toWallet.publicKey,
         amount,

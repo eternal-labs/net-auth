@@ -9,7 +9,6 @@ import {
 } from '@solana/web3.js';
 import { config } from '../config';
 import { logger } from '../utils/logger';
-import { walletService } from './wallet.service';
 
 /**
  * Payment Service

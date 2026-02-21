@@ -2,7 +2,6 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
 import { agentService } from '../../services/agent.service';
-import { walletService } from '../../services/wallet.service';
 
 export const agentCommands = new Command('agent')
   .description('Agent management commands')

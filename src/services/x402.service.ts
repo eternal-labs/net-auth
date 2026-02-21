@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 import { config } from '../config';
 import { logger } from '../utils/logger';
 import { Payment } from '../models/Payment';
@@ -136,6 +137,8 @@ export class X402Service {
         return null; // Cannot retrieve details without x402 service
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const fetch = (await import('node-fetch')).default || globalThis.fetch;
       const response = await fetch(`${this.endpoint}/api/v1/payments/details`, {
         method: 'POST',
         headers: {

@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { privacyService } from '../../services/privacy.service';
-import { SendPaymentRequest, PaymentResponse, PaymentStatus } from '../../models/Payment';
+import { SendPaymentRequest, PaymentResponse } from '../../models/Payment';
 import { logger } from '../../utils/logger';
 
 const router = Router();
@@ -51,10 +51,10 @@ router.post('/send', async (req: Request, res: Response) => {
       message: 'Payment initiated',
     };
 
-    res.status(202).json(response);
+    return res.status(202).json(response);
   } catch (error) {
     logger.error('Error sending payment:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to send payment',
     });
   }
@@ -75,10 +75,10 @@ router.get('/:paymentId', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Payment not found' });
     }
 
-    res.json(payment);
+    return res.json(payment);
   } catch (error) {
     logger.error('Error getting payment:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to get payment',
     });
   }
@@ -92,10 +92,10 @@ router.get('/agent/:agentId', async (req: Request, res: Response) => {
   try {
     const { agentId } = req.params;
     const payments = await privacyService.getAgentPayments(agentId);
-    res.json(payments);
+    return res.json(payments);
   } catch (error) {
     logger.error('Error getting agent payments:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to get payments',
     });
   }

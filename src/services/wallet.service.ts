@@ -1,7 +1,7 @@
 import { Keypair, Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { config } from '../config';
 import { logger } from '../utils/logger';
-import { AgentWallet, Agent } from '../models/Agent';
+import { AgentWallet } from '../models/Agent';
 import { encryptionService } from './encryption.service';
 
 export class WalletService {

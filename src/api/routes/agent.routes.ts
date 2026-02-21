@@ -18,10 +18,10 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 
     const agent = await agentService.registerAgent(request);
-    res.status(201).json(agent);
+    return res.status(201).json(agent);
   } catch (error) {
     logger.error('Error registering agent:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to register agent',
     });
   }
@@ -40,10 +40,10 @@ router.get('/:agentId', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Agent not found' });
     }
 
-    res.json(agent);
+    return res.json(agent);
   } catch (error) {
     logger.error('Error getting agent:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to get agent',
     });
   }
@@ -57,10 +57,10 @@ router.get('/:agentId/balance', async (req: Request, res: Response) => {
   try {
     const { agentId } = req.params;
     const balance = await agentService.getAgentBalance(agentId);
-    res.json(balance);
+    return res.json(balance);
   } catch (error) {
     logger.error('Error getting agent balance:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to get balance',
     });
   }
@@ -70,13 +70,13 @@ router.get('/:agentId/balance', async (req: Request, res: Response) => {
  * GET /api/agents
  * List all agents
  */
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (_req: Request, res: Response) => {
   try {
     const agents = await agentService.listAgents();
-    res.json(agents);
+    return res.json(agents);
   } catch (error) {
     logger.error('Error listing agents:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to list agents',
     });
   }

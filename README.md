@@ -57,7 +57,7 @@ NetAuth provides a secure, private payment infrastructure for autonomous agents 
 Install NetAuth globally to use the CLI from anywhere:
 
 ```bash
-npm install -g netauth
+npm install -g @eternallabs/netauth
 ```
 
 After installation, you can use the `netauth` command directly:
