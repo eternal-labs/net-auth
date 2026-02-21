@@ -4,15 +4,20 @@ import { logger } from '../utils/logger';
 
 export class EncryptionService {
   private algorithm = 'aes-256-gcm';
-  private key: Buffer;
+  private key: Buffer | null = null;
 
-  constructor() {
+  private getKey(): Buffer {
+    if (this.key) {
+      return this.key;
+    }
+
     const encryptionKey = config.security.encryptionKey;
     if (!encryptionKey) {
       throw new Error('ENCRYPTION_KEY must be set in environment variables');
     }
     // Derive a 32-byte key from the encryption key
     this.key = crypto.scryptSync(encryptionKey, 'salt', 32);
+    return this.key;
   }
 
   /**
@@ -20,8 +25,9 @@ export class EncryptionService {
    */
   encrypt(text: string): string {
     try {
+      const key = this.getKey();
       const iv = crypto.randomBytes(16);
-      const cipher = crypto.createCipheriv(this.algorithm, this.key, iv) as crypto.CipherGCM;
+      const cipher = crypto.createCipheriv(this.algorithm, key, iv) as crypto.CipherGCM;
 
       let encrypted = cipher.update(text, 'utf8', 'hex');
       encrypted += cipher.final('hex');
@@ -46,11 +52,12 @@ export class EncryptionService {
         throw new Error('Invalid encrypted data format');
       }
 
+      const key = this.getKey();
       const iv = Buffer.from(parts[0], 'hex');
       const authTag = Buffer.from(parts[1], 'hex');
       const encrypted = parts[2];
 
-      const decipher = crypto.createDecipheriv(this.algorithm, this.key, iv) as crypto.DecipherGCM;
+      const decipher = crypto.createDecipheriv(this.algorithm, key, iv) as crypto.DecipherGCM;
       decipher.setAuthTag(authTag);
 
       let decrypted = decipher.update(encrypted, 'hex', 'utf8');
@@ -64,5 +71,19 @@ export class EncryptionService {
   }
 }
 
-export const encryptionService = new EncryptionService();
+let encryptionServiceInstance: EncryptionService | null = null;
+
+export const getEncryptionService = (): EncryptionService => {
+  if (!encryptionServiceInstance) {
+    encryptionServiceInstance = new EncryptionService();
+  }
+  return encryptionServiceInstance;
+};
+
+// For backward compatibility
+export const encryptionService = new Proxy({} as EncryptionService, {
+  get(_target, prop) {
+    return getEncryptionService()[prop as keyof EncryptionService];
+  },
+});
 
